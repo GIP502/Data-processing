@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Window Starter</title>
+<link rel="icon" href="assets/branding/app-icon.ico">
+<link rel="stylesheet" href="assets/styles/tokens.css">
+<link rel="stylesheet" href="assets/styles/base.css">
+<link rel="stylesheet" href="assets/styles/shell.css">
+<link rel="stylesheet" href="assets/styles/motion.css">
+<link rel="stylesheet" href="assets/styles/process.css">
+<link rel="stylesheet" href="assets/styles/labeling.css">
+<link rel="stylesheet" href="assets/styles/result.css">
+</head>
+<body class="proto light surface">
+<main id="desktop" class="desktop" aria-label="작업 공간">
+<header class="brand"><img src="assets/branding/app-icon-original.png" alt="">Window Starter</header>
+<div id="windows"></div>
+<nav class="dock" aria-label="창 관리"><button id="newWindow" title="기본 창 열기" aria-label="닫은 기본 창 다시 열기"><img src="assets/icons/06-new-window.svg" alt=""></button><div id="windowList"></div><button id="theme" title="테마 변경" aria-label="테마 변경"><img src="assets/icons/42-dark-theme.svg" alt=""></button></nav>
+</main>
+<script src="src/surface-motion.js"></script><script src="src/window-manager.js"></script><script src="assets/vendor/sheetjs/xlsx.full.min.js"></script><script src="src/process-core.js"></script><script src="src/process-files.js"></script><script src="src/process-store.js"></script><script src="src/process-builder.js"></script><script src="src/labeling-core.js"></script><script src="src/data-labeling.js"></script><script src="src/result-export.js"></script><script src="src/result-view.js"></script><script src="src/app.js"></script>
+</body></html>
+
+
+
+
+

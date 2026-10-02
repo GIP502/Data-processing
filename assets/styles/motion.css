@@ -1,0 +1,65 @@
+/* Extracted original Surface Desk motion; geometry is owned by window-manager.js. */
+.win{animation:none}
+.surface-shadow{position:absolute;pointer-events:none;opacity:0}
+.surface .win.surface-opening,.surface .win.surface-sinking{background:var(--surface-orb)}
+.surface .win.surface-opening>*,.surface .win.surface-sinking>*{pointer-events:none}
+.surface .win.surface-drag{box-shadow:var(--surface-lag-x,0px) calc(var(--surface-shadow-y) + var(--surface-lag-y,0px)) var(--surface-shadow-blur) var(--surface-shadow-ink),var(--surface-shadow-extra)}
+.surface-ripple{position:absolute;z-index:100002;width:24px;height:24px;margin:-12px 0 0 -12px;border:1.5px solid var(--surface-ripple-color,rgba(112,120,112,.22));border-radius:50%;pointer-events:none;animation:surface-ripple var(--surface-ripple-duration) ease-out both}
+@keyframes surface-ripple{0%{opacity:.7;transform:scale(.25)}45%{opacity:.35}100%{opacity:0;transform:scale(1.85)}}
+.win.anim-rect{transition:left var(--dur-slow) var(--ease-out),top var(--dur-slow) var(--ease-out),width var(--dur-slow) var(--ease-out),height var(--dur-slow) var(--ease-out)}
+    /* Shadow leads briefly; the droplet stays round longer before unfolding. */
+    .surface-shadow { transform-origin:50% 50%;border:0;border-radius:50%;background:var(--surface-floor-shadow);box-shadow:none; }
+    .surface-shadow-rise { animation:surface-shadow-rise var(--surface-shadow-rise) both; }
+    .surface-shadow-sink { animation:surface-shadow-sink var(--surface-shadow-sink) both; }
+    @keyframes surface-shadow-rise {
+      0%{opacity:0;transform:translateY(24px) scale(var(--shadow-x),var(--shadow-y));animation-timing-function:ease-out}
+      8%,43%{opacity:1;transform:translateY(24px) scale(var(--shadow-x),var(--shadow-y))}
+      57%{opacity:.85;transform:translateY(24px) scale(calc(var(--shadow-x)*1.4),calc(var(--shadow-y)*1.2))}
+      73%{opacity:.55;transform:translateY(28px) scale(.85,.6)}
+      88%{opacity:.28;transform:translateY(25px) scale(1.03,.82)}
+      100%{opacity:0;transform:translateY(22px) scale(1.08,.88)}
+    }
+    @keyframes surface-shadow-sink {
+      0%{opacity:0;transform:translateY(24px) scale(1,.75)}
+      42%{opacity:.6;transform:translateY(24px) scale(.7,.45)}
+      74%{opacity:1;transform:translateY(24px) scale(var(--shadow-x),var(--shadow-y))}
+      100%{opacity:0;transform:translateY(24px) scale(calc(var(--shadow-x)*.6),calc(var(--shadow-y)*.6))}
+    }
+    /* Local transforms keep the initial 56px white circle centered in its final window. */
+    .win.surface-opening { transform-origin:50% 50%;animation:surface-rise var(--surface-rise) var(--surface-wait) both;pointer-events:none; }
+    .win.surface-sinking { transform-origin:50% 50%;animation:surface-sink var(--surface-sink) both;pointer-events:none; }
+    .win.surface-opening:before { content:"";position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:inherit;background:var(--surface-orb-shade);animation:liquid-sheen var(--surface-rise) var(--surface-wait) both; }
+    .win.surface-opening > * { animation:liquid-content var(--surface-rise) var(--surface-wait) both; }
+    .win.surface-sinking > * { animation:liquid-content-out var(--surface-sink) both; }
+    .win.surface-drag { transform-origin:50% 50%;transform:rotate(var(--liquid-tilt,0deg)) skew(var(--liquid-skew-x,0deg),var(--liquid-skew-y,0deg)) scale(var(--liquid-scale-x,1),var(--liquid-scale-y,1));transition:transform var(--surface-drag-duration) ease-out; }
+    @keyframes surface-rise {
+      0%{opacity:0;border-radius:50%;transform:translateY(24px) scale(var(--droplet-x),var(--droplet-y));box-shadow:var(--surface-orb-shadow);animation-timing-function:ease-out}
+      12%{opacity:1;border-radius:50%;transform:translateY(-16px) scale(var(--droplet-x),var(--droplet-y));box-shadow:var(--surface-orb-air);animation-timing-function:ease-in-out}
+      42%{opacity:1;border-radius:50%;transform:translateY(-22px) scale(var(--droplet-x),var(--droplet-y));box-shadow:var(--surface-orb-air);animation-timing-function:cubic-bezier(.18,.7,.22,1)}
+      63%{opacity:1;border-radius:42% 48% 39% 46%;transform:translateY(-22px) scale(.63,.73);box-shadow:var(--surface-stretch-shadow);animation-timing-function:cubic-bezier(.2,.7,.25,1)}
+      80%{border-radius:32px 24px 28px 22px;transform:translateY(3px) scale(1.035,.97);box-shadow:var(--surface-land-shadow);animation-timing-function:ease-in-out}
+      92%{border-radius:18px 21px 18px 20px;transform:translateY(-2px) scale(.995,1.006);animation-timing-function:ease-in-out}
+      100%{opacity:1;border-radius:var(--surface-radius);transform:translateY(0) scale(1);box-shadow:var(--elev-4)}
+    }
+    /* Reveal the actual window during expansion, before the rounded shell settles. */
+    @keyframes liquid-sheen { 0%,42%{opacity:1} 50%{opacity:.25} 58%,100%{opacity:0} }
+    @keyframes liquid-content { 0%,42%{opacity:0;filter:blur(3px)} 52%{opacity:.8;filter:blur(0)} 60%,100%{opacity:1;filter:blur(0)} }
+    @keyframes liquid-content-out { 0%{opacity:1} 34%,100%{opacity:0} }
+    @keyframes surface-sink {
+      0%{opacity:1;border-radius:var(--surface-radius);transform:translateY(0) scale(1);box-shadow:var(--elev-4);animation-timing-function:ease-in}
+      28%{opacity:1;border-radius:32px 44px 35px 49px;transform:translateY(-5px) scale(1.025,.94);animation-timing-function:cubic-bezier(.5,0,.65,1)}
+      70%{opacity:1;border-radius:50%;transform:translateY(12px) scale(var(--droplet-x),var(--droplet-y));box-shadow:var(--surface-orb-return-shadow);animation-timing-function:ease-in}
+      100%{opacity:0;border-radius:50%;transform:translateY(24px) scale(.01);box-shadow:0 1px 2px rgba(39,43,43,0)}
+    }
+
+@media(prefers-reduced-motion:reduce){
+ .surface .dock.dna-startup{animation:none!important;--dock-dna-alpha:.15;--dock-dna-glow:0}
+ .surface .surface-ripple,.surface .run.is-processing:before{display:none}
+ .surface .win.surface-drag{box-shadow:var(--elev-4)!important;transition:none!important}
+ .surface .dock-item:active{transform:none}
+ .surface .win.surface-opening,.surface .win.surface-sinking,.surface .win.surface-drag{animation:none!important;transform:none!important;opacity:1!important}
+ .surface .surface-shadow,.surface .win.surface-opening:before{display:none}
+ .surface .win.surface-opening > *,.surface .win.surface-sinking > *{animation:none!important;opacity:1!important;filter:none!important}
+}
+
+
